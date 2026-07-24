@@ -1,0 +1,3 @@
+﻿import { MDXRemote } from "next-mdx-remote/rsc"; import { Lightbulb, CircleCheck, TriangleAlert } from "lucide-react";
+const components = { Tip: ({ children }: { children: React.ReactNode }) => <aside className="callout tip"><Lightbulb/><div>{children}</div></aside>, Check: ({ children }: { children: React.ReactNode }) => <aside className="callout check"><CircleCheck/><div>{children}</div></aside>, Warning: ({ children }: { children: React.ReactNode }) => <aside className="callout warning"><TriangleAlert/><div>{children}</div></aside> };
+export function MdxContent({ source }: { source: string }) { return <div className="prose"><MDXRemote source={source} components={components}/></div> }

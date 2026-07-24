@@ -1,0 +1,2 @@
+﻿export type PromptInput = { subject: string; grade: string; lessonName: string; objectives: string; content: string; keywords: string; questionCount: number; duration: number; gameType: string; visualStyle: string; upgrades: string[] };
+export const defaultPromptInput: PromptInput = { subject: "Toán", grade: "Lớp 5", lessonName: "", objectives: "", content: "", keywords: "", questionCount: 10, duration: 10, gameType: "quiz", visualStyle: "Tươi sáng, thân thiện với học sinh", upgrades: ["responsive", "score"] };
