@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
+import { PlatformShell } from "@/components/platform-shell";
 import { siteConfig } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -15,6 +14,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { themeColor: "#0072BC", colorScheme: "light" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="vi"><body><a className="skip-link" href="#main">Đi tới nội dung</a><SiteHeader/><main id="main">{children}</main><SiteFooter/></body></html>;
+  return <html lang="vi"><body><a className="skip-link" href="#main">Đi tới nội dung</a><PlatformShell>{children}</PlatformShell></body></html>;
 }
 
