@@ -75,67 +75,6 @@ Kiểm thử, chỉnh sửa và chia sẻ
 
 ---
 
-## 💻 Chạy dự án trên máy tính
-
-### 1. Sao chép repository
-
-```bash
-git clone https://github.com/QuanLHK-FSC-HAG/demotool.git
-cd demotool
-```
-
-### 2. Cài đặt thư viện
-
-```bash
-npm install
-```
-
-### 3. Khởi chạy môi trường phát triển
-
-```bash
-npm run dev
-```
-
-Sau đó mở địa chỉ:
-
-```text
-http://localhost:3000
-```
-
-> Đây là ứng dụng Next.js nên không thể chạy bằng cách mở trực tiếp file `index.html`. Route trang chủ nằm tại `app/page.tsx`.
-
----
-
-## ✅ Kiểm tra trước khi triển khai
-
-```bash
-npm run lint
-npm run typecheck
-npm run build
-```
-
-Hoặc chạy liên tiếp:
-
-```bash
-npm run lint && npm run typecheck && npm run build
-```
-
----
-
-## 🌐 Triển khai lên Vercel
-
-1. Đăng nhập Vercel bằng tài khoản GitHub.
-2. Chọn **Add New Project**.
-3. Import repository `QuanLHK-FSC-HAG/demotool`.
-4. Giữ nguyên cấu hình mặc định do Vercel tự nhận diện Next.js.
-5. Chọn **Deploy**.
-
-Vercel sẽ tự động build lại website mỗi khi có commit mới được đẩy lên nhánh triển khai.
-
-Xem thêm hướng dẫn trong [`DEPLOYMENT.md`](./DEPLOYMENT.md).
-
----
-
 ## 🔐 Bảo mật API key
 
 API key được gửi đến endpoint `/api/openai/validate` để xác nhận với OpenAI. Khóa không được ghi vào GitHub hoặc cơ sở dữ liệu của dự án.
@@ -161,39 +100,6 @@ Không nên để website tự cập nhật số liệu trực tiếp vào GitHu
 
 ---
 
-## 📂 Tài liệu dự án
-
-- [`DEVELOPMENT_GUIDE.md`](./DEVELOPMENT_GUIDE.md) – hướng dẫn phát triển và bổ sung nội dung.
-- [`DEPLOYMENT.md`](./DEPLOYMENT.md) – hướng dẫn triển khai website.
-
----
-
-## 🖼️ Ảnh đại diện
-
-README sử dụng file ảnh sau tại thư mục gốc của repository:
-
-```text
-FSC HAG.jpg
-```
-
-Đường dẫn Markdown/HTML tương ứng:
-
-```html
-<img src="./FSC%20HAG.jpg" alt="FPT School Hậu Giang" />
-```
-
----
-
-## 🎯 Định hướng phát triển
-
-- Mở rộng thư viện game và học liệu theo từng môn học.
-- Bổ sung prompt mẫu theo cấp học và mục tiêu bài dạy.
-- Cho phép giáo viên lưu và quản lý sản phẩm cá nhân.
-- Tích hợp thêm các mô hình AI phù hợp với giáo dục.
-- Xây dựng kho sản phẩm để giáo viên tham khảo và chia sẻ.
-
----
-
 ## 👨‍🏫 Tác giả
 
 **QuanLHK**  
@@ -208,6 +114,7 @@ Trường Tiểu học, THCS và THPT FPT Hậu Giang
 
 **Vibe Coding · Google AI Studio · Học liệu số dành cho giáo viên**
 
-Made with ❤️ at FPT School Hậu Giang
+**Designed with ❤️ by QuanLHK (FSC HAG)**
 
 </div>
+
