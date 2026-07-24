@@ -5,7 +5,6 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 type ApiKeyContextValue = {
   apiKey: string;
   connected: boolean;
-  localConnectionCount: number;
   modalOpen: boolean;
   openModal: () => void;
   disconnect: () => void;
@@ -15,24 +14,14 @@ type ApiKeyContextValue = {
 const ApiKeyContext = createContext<ApiKeyContextValue | null>(null);
 const LOCAL_KEY = "fpt-openai-api-key";
 const SESSION_KEY = "fpt-openai-api-key-session";
-const HASHES_KEY = "fpt-openai-key-hashes";
-
-async function fingerprint(value: string) {
-  const bytes = new TextEncoder().encode(value);
-  const digest = await crypto.subtle.digest("SHA-256", bytes);
-  return Array.from(new Uint8Array(digest)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
-}
 
 export function ApiKeyProvider({ children }: { children: ReactNode }) {
   const [apiKey, setApiKey] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-  const [localConnectionCount, setLocalConnectionCount] = useState(0);
 
   useEffect(() => {
     const savedKey = localStorage.getItem(LOCAL_KEY) || sessionStorage.getItem(SESSION_KEY) || "";
-    const hashes = JSON.parse(localStorage.getItem(HASHES_KEY) || "[]") as string[];
     setApiKey(savedKey);
-    setLocalConnectionCount(hashes.length);
     setModalOpen(!savedKey);
   }, []);
 
@@ -55,14 +44,6 @@ export function ApiKeyProvider({ children }: { children: ReactNode }) {
       localStorage.removeItem(LOCAL_KEY);
     }
 
-    const hash = await fingerprint(key);
-    const hashes = JSON.parse(localStorage.getItem(HASHES_KEY) || "[]") as string[];
-    if (!hashes.includes(hash)) {
-      const nextHashes = [...hashes, hash];
-      localStorage.setItem(HASHES_KEY, JSON.stringify(nextHashes));
-      setLocalConnectionCount(nextHashes.length);
-    }
-
     setApiKey(key);
     setModalOpen(false);
   }, []);
@@ -77,12 +58,11 @@ export function ApiKeyProvider({ children }: { children: ReactNode }) {
   const value = useMemo(() => ({
     apiKey,
     connected: Boolean(apiKey),
-    localConnectionCount,
     modalOpen,
     openModal: () => setModalOpen(true),
     disconnect,
     connect,
-  }), [apiKey, connect, disconnect, localConnectionCount, modalOpen]);
+  }), [apiKey, connect, disconnect, modalOpen]);
 
   return <ApiKeyContext.Provider value={value}>{children}</ApiKeyContext.Provider>;
 }

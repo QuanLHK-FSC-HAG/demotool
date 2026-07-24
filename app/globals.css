@@ -169,10 +169,23 @@ footer{border-top:1px solid var(--line);padding:55px 0;background:#f7faf6}.foote
 .api-status-card.connected .rail-card-icon { color:var(--fpt-green); background:#eaf6e2; }
 .rail-text-button { width:100%; display:flex; justify-content:center; align-items:center; gap:6px; margin-top:10px; padding:7px; border:0; background:transparent; color:var(--muted); font-size:10px; cursor:pointer; }
 .rail-text-button svg { width:14px; }
-.usage-number { display:flex; justify-content:space-between; align-items:center; }
-.usage-number svg { width:25px; color:var(--fpt-blue); }
-.usage-number strong { color:var(--fpt-blue); font-size:38px; line-height:1; }
-.usage-card small { display:block; padding-top:11px; border-top:1px solid var(--line); color:#8b9aa4; font-size:9px; }
+.visit-stats-card { background:linear-gradient(150deg,#fff 20%,#f3f9fd); }
+.visit-stats-heading { display:flex; align-items:center; gap:11px; margin-bottom:14px; }
+.visit-stats-heading>svg { width:37px; height:37px; padding:9px; color:#fff; background:var(--fpt-blue); border-radius:11px; }
+.visit-stats-heading .rail-label { margin:0; }
+.visit-stats-heading h2 { margin:1px 0 0; }
+.visit-stat { display:flex; align-items:center; gap:10px; padding:10px 0; border-top:1px solid var(--line); }
+.visit-stat>svg { width:18px; color:var(--fpt-orange); }
+.visit-stat.online>svg { color:var(--fpt-green); }
+.visit-stat span,.visit-stat small,.visit-stat strong { display:block; }
+.visit-stat span { flex:1; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.visit-stat small { color:var(--muted); font-size:9px; }
+.visit-stat strong { color:var(--fpt-blue); font-size:18px; line-height:1; }
+.visit-stat.online strong { color:var(--fpt-green); }
+.visit-stat.loading strong { color:transparent; min-width:42px; height:14px; border-radius:6px; background:linear-gradient(90deg,#e5edf2,#f5f8fa,#e5edf2); background-size:200% 100%; animation:stats-pulse 1.2s linear infinite; }
+.visit-stats-note { margin:11px 0 0!important; padding-top:11px; border-top:1px solid var(--line); font-size:8px!important; }
+.visit-stats-note.unavailable { color:#9a6a00; }
+@keyframes stats-pulse { to { background-position:-200% 0; } }
 .safety-card { display:flex; gap:11px; background:#f2f8fc; }
 .safety-card>svg { width:22px; color:var(--fpt-blue); }
 .safety-card b { font-size:11px; }

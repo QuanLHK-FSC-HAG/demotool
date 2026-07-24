@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpenCheck, CircleHelp, GalleryHorizontalEnd, Gamepad2, KeyRound, LayoutDashboard, LogOut, Puzzle, ShieldCheck, Sparkles, UsersRound, WandSparkles } from "lucide-react";
+import { BookOpenCheck, CircleHelp, GalleryHorizontalEnd, Gamepad2, KeyRound, LayoutDashboard, LogOut, Puzzle, ShieldCheck, Sparkles, WandSparkles } from "lucide-react";
 import { ApiKeyModal } from "@/components/api-key-modal";
 import { ApiKeyProvider, useApiKey } from "@/components/api-key-provider";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { VisitStats } from "@/components/visit-stats";
 import { cn } from "@/lib/utils";
 
 const navigation = [
@@ -20,8 +21,8 @@ const navigation = [
 ];
 
 function RightRail() {
-  const { connected, localConnectionCount, openModal, disconnect } = useApiKey();
-  return <aside className="right-rail" aria-label="Trạng thái tài khoản"><section className={`rail-card api-status-card ${connected ? "connected" : ""}`}><div className="rail-card-icon"><KeyRound/></div><span className="rail-label">OPENAI API</span><h2>{connected ? "Đã kết nối" : "Chưa kết nối"}</h2><p>{connected ? "API key đang sẵn sàng trong phiên làm việc này." : "Kết nối khóa cá nhân để sử dụng công cụ."}</p><button className="button full" onClick={openModal}>{connected ? "Đổi API key" : "Kết nối ngay"}</button>{connected && <button className="rail-text-button" onClick={disconnect}><LogOut/> Ngắt kết nối</button>}</section><section className="rail-card usage-card"><div className="usage-number"><UsersRound/><strong>{localConnectionCount}</strong></div><h2>Khóa đã kết nối</h2><p>Số API key khác nhau từng được xác nhận trên trình duyệt này.</p><small>Không phải số người dùng toàn cầu.</small></section><section className="rail-card safety-card"><ShieldCheck/><div><b>Quyền riêng tư</b><p>Không lưu API key vào GitHub hoặc cơ sở dữ liệu của website.</p></div></section></aside>;
+  const { connected, openModal, disconnect } = useApiKey();
+  return <aside className="right-rail" aria-label="Trạng thái tài khoản"><section className={`rail-card api-status-card ${connected ? "connected" : ""}`}><div className="rail-card-icon"><KeyRound/></div><span className="rail-label">OPENAI API</span><h2>{connected ? "Đã kết nối" : "Chưa kết nối"}</h2><p>{connected ? "API key đang sẵn sàng trong phiên làm việc này." : "Kết nối khóa cá nhân để sử dụng công cụ."}</p><button className="button full" onClick={openModal}>{connected ? "Đổi API key" : "Kết nối ngay"}</button>{connected && <button className="rail-text-button" onClick={disconnect}><LogOut/> Ngắt kết nối</button>}</section><VisitStats/><section className="rail-card safety-card"><ShieldCheck/><div><b>Quyền riêng tư</b><p>Không lưu API key vào GitHub hoặc cơ sở dữ liệu của website.</p></div></section></aside>;
 }
 
 function ShellContent({ children }: { children: React.ReactNode }) {
