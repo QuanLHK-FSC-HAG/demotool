@@ -87,19 +87,14 @@ API key được gửi đến endpoint `/api/openai/validate` để xác nhận 
 
 ## 📊 Bộ đếm người dùng
 
-Bộ đếm hiện tại chỉ ghi nhận số API key khác nhau đã được xác nhận trên trình duyệt đang sử dụng. Đây không phải là số người dùng toàn cầu.
+Website sử dụng **Redis** để lưu trữ và cập nhật bộ đếm người dùng theo thời gian thực.
 
-Để xây dựng bộ đếm toàn hệ thống, nên sử dụng một dịch vụ lưu trữ phía server như:
+Mỗi API Key hợp lệ được xác nhận sẽ được ghi nhận vào Redis, giúp thống kê số lượng người dùng một cách **nhanh, ổn định và tập trung**. Dữ liệu được lưu độc lập với phiên chạy của Vercel nên **không bị mất khi ứng dụng được redeploy hoặc khởi động lại**.
 
-- Vercel KV hoặc Redis.
-- Supabase.
-- Firebase.
-- Một cơ sở dữ liệu serverless tương đương.
-
-Không nên để website tự cập nhật số liệu trực tiếp vào GitHub vì cách này cần token có quyền ghi repository, khó kiểm soát bảo mật và dễ tạo số liệu sai lệch.
+> Redis là cơ sở dữ liệu dạng **in-memory key–value**, nổi tiếng với tốc độ truy xuất rất cao, phù hợp cho các tác vụ như bộ đếm (Counter), thống kê, cache và quản lý phiên đăng nhập (Session).
 
 ---
-
+<div align="center">
 ## 👨‍🏫 Tác giả
 
 **Lê Hữu Kỳ Quan**  
@@ -107,8 +102,6 @@ Giáo viên Tin học, Tổ trưởng chuyên môn Tổ Khoa học Tự nhiên
 Trường Tiểu học, THCS và THPT FPT Hậu Giang (Thành phố Cần Thơ)
 
 ---
-
-<div align="center">
 
 ### ⭐ Hãy đánh dấu Star nếu dự án hữu ích
 
