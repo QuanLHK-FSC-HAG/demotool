@@ -95,7 +95,7 @@ Mỗi API Key hợp lệ được xác nhận sẽ được ghi nhận vào Redi
 
 ---
 <div align="center">
-## 👨‍🏫 Tác giả
+👨‍🏫 Tác giả
 
 **Lê Hữu Kỳ Quan**  
 Giáo viên Tin học, Tổ trưởng chuyên môn Tổ Khoa học Tự nhiên  
