@@ -1,10 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+
+import { AnalyticsHeartbeat } from "@/components/analytics-heartbeat";
 import { PlatformShell } from "@/components/platform-shell";
 import { siteConfig } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tap-huan-google-ai-studio.vercel.app"),
+  metadataBase: new URL(
+    "https://tap-huan-google-ai-studio.vercel.app",
+  ),
 
   title: {
     default: siteConfig.name,
@@ -40,6 +44,8 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body>
+        <AnalyticsHeartbeat />
+
         <a className="skip-link" href="#main">
           Đi tới nội dung
         </a>
