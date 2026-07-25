@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "Tập huấn Google AI Studio",
+  name: "Vibe Coding cùng Google AI Studio - Designed by QuanLHK",
   shortName: "Google AI Studio",
   description: "Nền tảng tập huấn giúp giáo viên biến bài học thành game và website học tập với Google AI Studio.",
   aiStudioUrl: "https://aistudio.google.com/apps",
