@@ -102,9 +102,9 @@ Không nên để website tự cập nhật số liệu trực tiếp vào GitHu
 
 ## 👨‍🏫 Tác giả
 
-**QuanLHK**  
-Tổ Khoa học Tự nhiên  
-Trường Tiểu học, THCS và THPT FPT Hậu Giang
+**Lê Hữu Kỳ Quan**  
+Giáo viên Tin học, Tổ trưởng chuyên môn Tổ Khoa học Tự nhiên  
+Trường Tiểu học, THCS và THPT FPT Hậu Giang (Thành phố Cần Thơ)
 
 ---
 
