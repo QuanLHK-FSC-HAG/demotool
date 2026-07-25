@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 
 const ONLINE_SECONDS = 12;
+const HEARTBEAT_SECONDS = 3;
 const DAILY_TTL_SECONDS = 8 * 24 * 60 * 60;
 
 const TOTAL_KEY = "analytics:visits:total";
@@ -186,5 +187,5 @@ export async function getVisitStats(): Promise<VisitStats> {
 
 export const analyticsConfig = {
   onlineSeconds: ONLINE_SECONDS,
-  heartbeatSeconds: 3,
+  heartbeatSeconds: HEARTBEAT_SECONDS,
 };
