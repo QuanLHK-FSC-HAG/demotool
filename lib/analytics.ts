@@ -1,7 +1,6 @@
 import { createHash } from "node:crypto";
 
-const ONLINE_SECONDS = 12;
-const HEARTBEAT_SECONDS = 3;
+const ONLINE_SECONDS = 5 * 60;
 const DAILY_TTL_SECONDS = 8 * 24 * 60 * 60;
 
 const TOTAL_KEY = "analytics:visits:total";
@@ -22,24 +21,18 @@ export type VisitStats = {
 export class AnalyticsNotConfiguredError extends Error {
   constructor() {
     super("Analytics service is not configured");
-    this.name = "AnalyticsNotConfiguredError";
   }
 }
 
 function getRedisConfig() {
   const url = process.env.UPSTASH_REDIS_REST_URL?.replace(/\/$/, "");
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
-
-  if (!url || !token) {
-    throw new AnalyticsNotConfiguredError();
-  }
-
+  if (!url || !token) throw new AnalyticsNotConfiguredError();
   return { url, token };
 }
 
 async function redisRequest<T>(path: string, body: unknown): Promise<T> {
   const { url, token } = getRedisConfig();
-
   const response = await fetch(`${url}${path}`, {
     method: "POST",
     headers: {
@@ -50,10 +43,7 @@ async function redisRequest<T>(path: string, body: unknown): Promise<T> {
     cache: "no-store",
   });
 
-  if (!response.ok) {
-    throw new Error("Analytics storage request failed");
-  }
-
+  if (!response.ok) throw new Error("Analytics storage request failed");
   return response.json() as Promise<T>;
 }
 
@@ -64,7 +54,6 @@ function vietnamDateKey(date = new Date()) {
     month: "2-digit",
     day: "2-digit",
   }).format(date);
-
   return `analytics:visits:day:${day}`;
 }
 
@@ -85,7 +74,6 @@ return 1
 export async function recordVisit(visitorId: string) {
   const hash = visitorHash(visitorId);
   const now = Date.now();
-
   const command = [
     "EVAL",
     RECORD_VISIT_SCRIPT,
@@ -98,84 +86,21 @@ export async function recordVisit(visitorId: string) {
     hash,
     String(now - ONLINE_SECONDS * 1000),
   ];
-
   const response = await redisRequest<UpstashResult<number>>("", command);
-
-  if (response.error) {
-    throw new Error("Analytics visit command failed");
-  }
-
+  if (response.error) throw new Error("Analytics storage command failed");
   return response.result === 1;
-}
-
-export async function recordHeartbeat(visitorId: string) {
-  const hash = visitorHash(visitorId);
-  const now = Date.now();
-
-  const commands = [
-    ["ZADD", ONLINE_KEY, String(now), hash],
-    [
-      "ZREMRANGEBYSCORE",
-      ONLINE_KEY,
-      "0",
-      String(now - ONLINE_SECONDS * 1000),
-    ],
-    ["EXPIRE", ONLINE_KEY, String(DAILY_TTL_SECONDS)],
-  ];
-
-  const results =
-    await redisRequest<Array<UpstashResult<string | number | null>>>(
-      "/pipeline",
-      commands,
-    );
-
-  if (results.some((item) => item.error)) {
-    throw new Error("Analytics heartbeat command failed");
-  }
-
-  return true;
-}
-
-export async function recordOffline(visitorId: string) {
-  const hash = visitorHash(visitorId);
-
-  const response = await redisRequest<UpstashResult<number>>("", [
-    "ZREM",
-    ONLINE_KEY,
-    hash,
-  ]);
-
-  if (response.error) {
-    throw new Error("Analytics offline command failed");
-  }
-
-  return true;
 }
 
 export async function getVisitStats(): Promise<VisitStats> {
   const now = Date.now();
-
   const commands = [
-    [
-      "ZREMRANGEBYSCORE",
-      ONLINE_KEY,
-      "0",
-      String(now - ONLINE_SECONDS * 1000),
-    ],
+    ["ZREMRANGEBYSCORE", ONLINE_KEY, "0", String(now - ONLINE_SECONDS * 1000)],
     ["GET", TOTAL_KEY],
     ["GET", vietnamDateKey()],
     ["ZCARD", ONLINE_KEY],
   ];
-
-  const results =
-    await redisRequest<Array<UpstashResult<string | number | null>>>(
-      "/pipeline",
-      commands,
-    );
-
-  if (results.some((item) => item.error)) {
-    throw new Error("Analytics stats command failed");
-  }
+  const results = await redisRequest<Array<UpstashResult<string | number | null>>>("/pipeline", commands);
+  if (results.some((item) => item.error)) throw new Error("Analytics storage command failed");
 
   return {
     total: Number(results[1]?.result || 0),
@@ -186,6 +111,5 @@ export async function getVisitStats(): Promise<VisitStats> {
 }
 
 export const analyticsConfig = {
-  onlineSeconds: ONLINE_SECONDS,
-  heartbeatSeconds: HEARTBEAT_SECONDS,
+  onlineMinutes: ONLINE_SECONDS / 60,
 };

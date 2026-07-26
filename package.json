@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "node --experimental-strip-types --test lib/content.test.ts lib/ai/model-selector.test.ts lib/ai/errors.test.ts lib/ai/api.test.ts lib/ai/storage.test.ts lib/ai/providers/adapters.test.ts",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit"
   },
