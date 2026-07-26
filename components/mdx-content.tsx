@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 import { CircleCheck, Lightbulb, TriangleAlert } from "lucide-react";
+import { CodeBlock } from "@/components/code-block";
+import { buildGoogleAIStudioAgentPrompt, type AgentPromptContext } from "@/lib/agent-prompt";
 
 function inline(text: string): ReactNode[] {
   return text.split(/(\*\*[^*]+\*\*|`[^`]+`)/g).filter(Boolean).map((part, index) => {
@@ -14,7 +16,7 @@ function Callout({ type, children }: { type: "tip" | "check" | "warning"; childr
   return <aside className={`callout ${type}`}><Icon/><div>{children}</div></aside>;
 }
 
-export function MdxContent({ source }: { source: string }) {
+export function MdxContent({ source, agentContext }: { source: string; agentContext?: AgentPromptContext }) {
   const lines = source.replace(/\r/g, "").split("\n");
   const blocks: ReactNode[] = [];
   let index = 0;
@@ -28,7 +30,9 @@ export function MdxContent({ source }: { source: string }) {
       const code: string[] = [];
       index += 1;
       while (index < lines.length && !lines[index].trim().startsWith("```")) { code.push(lines[index]); index += 1; }
-      blocks.push(<pre key={blocks.length}><code data-language={language}>{code.join("\n")}</code></pre>);
+      const value = code.join("\n");
+      const displayedCode = language === "text" && agentContext ? buildGoogleAIStudioAgentPrompt(value, agentContext) : value;
+      blocks.push(<CodeBlock code={displayedCode} language={language} key={blocks.length}/>);
       index += 1;
       continue;
     }

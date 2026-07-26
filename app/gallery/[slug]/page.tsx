@@ -28,6 +28,6 @@ export default async function ExperiencePage({ params }: { params: Promise<{ slu
       <div className="experience-detail-meta"><span>{item.meta.experienceType}</span><span>{item.meta.difficulty}</span><span>{item.meta.duration}</span></div>
       <div className="experience-detail-actions"><Link className="button" href="/builder"><WandSparkles/> Tùy biến trong Prompt Builder</Link><a className="button secondary" href="https://aistudio.google.com/" target="_blank" rel="noreferrer">Mở Google AI Studio <ExternalLink/></a></div>
     </div></section>
-    <article className="article-shell narrow"><MdxContent source={item.content}/></article>
+    <article className="article-shell narrow"><MdxContent source={item.content} agentContext={{ title: item.meta.title, subject: item.meta.subject, level: item.meta.level, experienceType: item.meta.experienceType }}/></article>
   </>;
 }
